@@ -1,5 +1,6 @@
 #
 
+# Download dataset and uncompress if absent
 fetch_data <- function() {
    zipData <- './UCI%20HAR%20Dataset.zip'
    if(!file.exists('UCI HAR Dataset') & !file.exists('UCI%20HAR%20Dataset')) {
@@ -12,3 +13,11 @@ fetch_data <- function() {
    }
 }
 
+# 
+
+
+
+
+# Main
+
+fetch_data()
