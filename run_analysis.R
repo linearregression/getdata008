@@ -4,6 +4,9 @@
 # Uses descriptive activity names to name the activities in the data set
 # Appropriately labels the data set with descriptive variable names. #Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
+# Set of global variables
+result <- 'tidydata.txt'
+
 # Download dataset and uncompress if absent
 datafolder <- './UCI HAR Dataset'
 fetch_data <- function() {
@@ -20,11 +23,25 @@ fetch_data <- function() {
 
 # 
 setwd("./UCI HAR Dataset")
-featuresList <- read.table(file='activity_labels.txt', skipNul=TRUE, stringsAsFactors=FALSE)
+activityLabels <- read.table(file='activity_labels.txt', skipNul=TRUE, stringsAsFactors=FALSE)
+
+merge_testtrain <- function() {
+   
+}
 
 
 
+
+# save tidydata result
+savetidydata <- function() {
+
+
+}
 
 # Main
 
 fetch_data()
+mergedata <- merge_testtrain()
+
+setwd("..")
+savetidydata()
