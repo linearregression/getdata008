@@ -15,6 +15,8 @@ Companies like Fitbit, Nike, and Jawbone Up are developing the most advanced alg
 
 [Human Activity Recognition Using Smartphones](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)
 
+There are 10299 Instances of Multivariate, Time-Series; each with 561 attribtues.
+
 
 ## Usage
 Go to the directory containing the run_analysis.R. The type.
