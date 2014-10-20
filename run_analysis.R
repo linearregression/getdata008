@@ -22,22 +22,25 @@ fetch_data <- function() {
 }
 
 # The goal is to create a single table of all data on each subject. One observation is on a subject per timestamp.
+# From READMEwe know we have 10299 number of observations
 setwd("./UCI HAR Dataset")
+known_observations = 10299
 
 activityLabels <- read.table(file='activity_labels.txt', skipNul=TRUE, stringsAsFactors=FALSE)
-mergedata <- function(filename) {
-   requirethat(!is.na(filename), 'Filename is absent')
-   data_train <-read.table(file=paste('train//', filename, '_train.txt', sep=''), skipNul=T, stringsAsFactors=F)
-   data_test <-read.table(file=paste('test//', filename, '_test.txt', sep=''), skipNul=T, stringsAsFactors=F)
-   rbind2(x=data_train, y=data_test)
-}
-subject_set <- function() {
+# merge test and train subject ids
+subject_set <- mergedata('subject')
+# merge test and train y (activity index)
+activity_index <- mergedata('y')
 
-}
+# merge test and train X (time series measurement)
+timeseries_data <- mergedata('X')
 
-merge_testtrain <- function() {
-   
-}
+# Check for number of rows match
+if(known_observations-nrow(subject_set) ==0) { stop('Number of observatons not equal to doc')}
+if((nrow(subject_set) - nrow(activity_index) == 0) { stop('subject index not equals activity index') }
+if((nrow(timeseries_data) - nrow(activity_index) == 0) { stop('activity index not equal time series data') }
+
+
 
 
 
@@ -49,6 +52,15 @@ savetidydata <- function() {
 }
 
 # Util function
+mergedata <- function(filename) {
+   requirethat(!is.na(filename), 'Filename is absent')
+   data_train <-read.table(file=paste('train//', filename, '_train.txt', sep=''), skipNul=T, stringsAsFactors=F)
+   data_test <-read.table(file=paste('test//', filename, '_test.txt', sep=''), skipNul=T, stringsAsFactors=F)
+   merged <- rbind2(x=data_train, y=data_test)
+   rm(list=c('data_train','data_test'))
+   merged
+}
+
 requirethat <- function(predicate, message) {
         if(!(predicate)) stop(message) 
 }
