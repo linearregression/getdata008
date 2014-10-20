@@ -49,7 +49,9 @@ combine_data <- function() {
     if(known_features-nrow(col) !=0)
         { stop('Number of feature columns not equal to doc')}
     master_dataset <- cbind(subject_set, activity_index, timeseries_data)
-    colnames(master_dataset) <-c('subjectId', 'activityId', as.character(col$V2))
+    # name the columns
+    colnames(master_dataset) <- c('subjectId', 'activityId', as.character(col$V2))
+    # expand activityIds to corresponding descriptions
     master_dataset <- transform_activityId(master_dataset)
     rm(list=c('subject_set', 'activity_index', 'timeseries_data','col'))
     master_dataset
@@ -77,7 +79,7 @@ cleanse_colname <- function(columns) {
 transform_activityId <- function(dataset) {
      requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
      activityLabels <- read.table(file='activity_labels.txt', skipNul=TRUE, stringsAsFactors=FALSE)
- 
+     
 
 }
 
