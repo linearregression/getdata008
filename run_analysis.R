@@ -49,8 +49,8 @@ combine_data <- function() {
     if(known_features-nrow(col) !=0)
         { stop('Number of feature columns not equal to doc')}
     master_dataset <- cbind(subject_set, activity_index, timeseries_data)
-
     colnames(master_dataset) <-c('subjectId', 'activityId', as.character(col$V2))
+    master_dataset <- transform_activityId(master_dataset)
     rm(list=c('subject_set', 'activity_index', 'timeseries_data','col'))
     master_dataset
 }
@@ -61,7 +61,6 @@ cleanse_colname <- function(columns) {
      # remove ()
      # expand leading t, f as time,frequency
      # expand various shorthands
-
      columns <- lapply(columns, FUN=function(x) {
                    x <- gsub(pattern='*\\(\\)*', '', x) 
                    x <- sub(pattern='*Acc', "Accelerometer", x) 
@@ -74,6 +73,13 @@ cleanse_colname <- function(columns) {
      return(unlist(columns))
 }
 
+# map acitivityId to activity name
+transform_activityId <- function(dataset) {
+     requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
+     lapply
+
+}
+
 # filter data for mean and standard deviation per assignment
 # We only care about columns that have either mean or stardard deviations
 filter_data <- function(dataset) {
@@ -81,7 +87,8 @@ filter_data <- function(dataset) {
      colsextracted <- colnames(dataset)
      cols_mean <- grep(pattern="*-mean\\(\\)*", colsextracted, ignore.case=T)
      cols_std <- grep(pattern="*-std\\(\\)*", colsextracted, ignore.case=T)
-     col_index <- union(cols_mean,cols_std)
+     # column1,2 are subjectId and activityId
+     col_index <- union(c(1,2,cols_mean),cols_std)
      colsextracted <- colsextracted[col_index]
      col <- cleanse_colname(colsextracted)
      ret <- dataset[col_index]
