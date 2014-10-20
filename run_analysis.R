@@ -42,7 +42,7 @@ combine_data <- function() {
     if(nrow(timeseries_data) - nrow(activity_index) != 0)
         { stop('activity index not equal time series data') }
     master_dataset <- cbind(subject_set, activity_index, timeseries_data)
-    rm(list=c(subject_set, activity_index, timeseries_data))
+    rm(list=c('subject_set', 'activity_index', 'timeseries_data'))
     master_dataset
 }
 # 
