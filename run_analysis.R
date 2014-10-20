@@ -41,7 +41,7 @@ combine_data <- function() {
         { stop('subject index not equals activity index') }
     if(nrow(timeseries_data) - nrow(activity_index) != 0)
         { stop('activity index not equal time series data') }
-    cbind()
+    cbind(subject_set)
 }
 # 
 
@@ -50,9 +50,10 @@ combine_data <- function() {
 
 
 # save tidydata result
-savetidydata <- function() {
-
-
+savetidydata <- function(data, filename='tidydata.csv') {
+     requirethat(!(is.na(data) | is.null(data)), 'Dataset cannot be absetn or NULL')
+     requirethat(!is.na(filename), 'Filename is absent') 
+     write.table(data, file=filename, sep="\t", row.names=FALSE)
 }
 
 # Util functions
