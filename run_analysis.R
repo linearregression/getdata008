@@ -50,7 +50,7 @@ combine_data <- function() {
         { stop('Number of feature columns not equal to doc')}
     master_dataset <- cbind(subject_set, activity_index, timeseries_data)
 
-    colnames(master_dataset) <-as.character(col$V2)
+    colnames(master_dataset) <-c('subjectId', 'activityId', as.character(col$V2))
     rm(list=c('subject_set', 'activity_index', 'timeseries_data','col'))
     master_dataset
 }
