@@ -63,11 +63,15 @@ cleanse_colname <- function(columns) {
 }
 
 # filter data for mean and standard deviation per assignment
+# We only care about columns that have both mean AND stardard deviations
 filter_data <- function(dataset) {
-     requirethat(!(is.na(data) | is.null(data)), 'Dataset cannot be absent or NULL')
+     requirethat(!(is.na(dataset) | is.null(dataset)), 'Dataset cannot be absent or NULL')
      col <- colnames(dataset)
-     colsextracted <- 
-
+     cols_mean <- grep(pattern="*-mean\\(\\)*", colsextracted, ignore.case=T)
+     cols_std <- grep(pattern="*-std\\(\\)*", colsextracted, ignore.case=T)
+     ret <- dataset[union(cols_mean,cols_std)]
+     rm(list=c('col','cols_mean','cols_std'))
+     return(ret)
 }
 
 
