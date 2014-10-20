@@ -58,8 +58,20 @@ combine_data <- function() {
 # clease column names.
 cleanse_colname <- function(columns) {
      requirethat(!(is.na(columns)), 'Columns names cannot be absent')
-     columns <- g
+     # remove ()
+     # expand leading t, f as time,frequency
+     # expand various shorthands
 
+     columns <- lapply(columns, FUN=function(x) {
+                   gsub(pattern='*\\(\\)*', '', x) 
+                   sub(pattern='^f*', 'frequency', x)
+                   sub(pattern='^t*', 'time', x) 
+                   sub(pattern='Acc', "Accelerometer", x) 
+                   sub(pattern="Gyro", "Gyroscope", x) 
+                   sub(pattern='Mag', "Magnitude", x)
+                   sub(pattern='std', "standarddeviation", x)
+               })
+     return(columns)
 }
 
 # filter data for mean and standard deviation per assignment
@@ -69,7 +81,11 @@ filter_data <- function(dataset) {
      col <- colnames(dataset)
      cols_mean <- grep(pattern="*-mean\\(\\)*", colsextracted, ignore.case=T)
      cols_std <- grep(pattern="*-std\\(\\)*", colsextracted, ignore.case=T)
-     ret <- dataset[union(cols_mean,cols_std)]
+     col_index <- union(cols_mean,cols_std)
+     col <- cleanse_colname(col)
+     col <- match_columns(col)
+     #ifelse((nrow(cols_mean) - nrow(cols_std) !=0
+     ret <- dataset[col_index]
      rm(list=c('col','cols_mean','cols_std'))
      return(ret)
 }
