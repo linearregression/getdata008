@@ -57,33 +57,34 @@ combine_data <- function() {
 
 # clease column names.
 cleanse_colname <- function(columns) {
-     requirethat(!(is.na(columns)), 'Columns names cannot be absent')
+     requirethat(is.character(columns), 'Columns names cannot be absent')
      # remove ()
      # expand leading t, f as time,frequency
      # expand various shorthands
 
      columns <- lapply(columns, FUN=function(x) {
-                   gsub(pattern='*\\(\\)*', '', x) 
-                   sub(pattern='^f*', 'frequency', x)
-                   sub(pattern='^t*', 'time', x) 
-                   sub(pattern='Acc', "Accelerometer", x) 
-                   sub(pattern="Gyro", "Gyroscope", x) 
-                   sub(pattern='Mag', "Magnitude", x)
-                   sub(pattern='std', "standarddeviation", x)
+                   x <- gsub(pattern='*\\(\\)*', '', x) 
+                  # x <- sub(pattern='^f*', 'frequency', x)
+                  # x <- sub(pattern='^t*', 'time', x) 
+                   x <- sub(pattern='*Acc', "Accelerometer", x) 
+                   x <- sub(pattern="*Gyro", "Gyroscope", x) 
+                   x <- sub(pattern='*Mag', "Magnitude", x)
+                   x <- sub(pattern='*std', "standarddeviation", x)
                })
-     return(columns)
+     return(unlist(columns))
 }
 
 # filter data for mean and standard deviation per assignment
 # We only care about columns that have both mean AND stardard deviations
 filter_data <- function(dataset) {
-     requirethat(!(is.na(dataset) | is.null(dataset)), 'Dataset cannot be absent or NULL')
-     col <- colnames(dataset)
+     requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
+     colsextracted <- colnames(dataset)
      cols_mean <- grep(pattern="*-mean\\(\\)*", colsextracted, ignore.case=T)
      cols_std <- grep(pattern="*-std\\(\\)*", colsextracted, ignore.case=T)
      col_index <- union(cols_mean,cols_std)
-     col <- cleanse_colname(col)
-     col <- match_columns(col)
+     colsextracted <- colsextracted[col_index]
+     col <- cleanse_colname(colsextracted)
+     #col <- match_columns(col)
      #ifelse((nrow(cols_mean) - nrow(cols_std) !=0
      ret <- dataset[col_index]
      rm(list=c('col','cols_mean','cols_std'))
@@ -102,7 +103,7 @@ label_data <- function(dataset) {
 
 # save tidydata result
 savetidydata <- function(data, filename='tidydata.csv') {
-     requirethat(!(is.na(data) | is.null(data)), 'Dataset cannot be absent or NULL')
+     requirethat(is.data.frame(data), 'Dataset cannot be absent or NULL')
      requirethat(!is.na(filename), 'Filename is absent') 
      write.table(data, file=filename, sep="\t", row.names=FALSE)
      TRUE
