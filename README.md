@@ -18,6 +18,8 @@ source('run_analysis.R')
 ```
 
 # Script flow :
+Each activity is associated with an integer number (1-6), from activity_labels.txt. y_train and y_test files contains the list of columns 
+numbered index associated with actvity labels for data files X_train and X_test.
 
 -Data from test and train files are loaded and combined (Subject,Labels)
 
