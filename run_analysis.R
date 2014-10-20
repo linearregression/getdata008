@@ -25,6 +25,8 @@ fetch_data <- function() {
 # From READMEwe know we have 10299 number of observations
 setwd("./UCI HAR Dataset")
 
+# Merge test/train data into one dataset. SubjectId and Activity prepend as columns
+# to help identify what data relate to which subjects
 combine_data <- function() {
     known_observations = 10299
     activityLabels <- read.table(file='activity_labels.txt', skipNul=TRUE, stringsAsFactors=FALSE)
@@ -45,17 +47,30 @@ combine_data <- function() {
     rm(list=c('subject_set', 'activity_index', 'timeseries_data'))
     master_dataset
 }
-# 
+
+# filter data for mean and standard deviation per assignment
+filter_data <- function(dataset) {
+     requirethat(!(is.na(data) | is.null(data)), 'Dataset cannot be absent or NULL')
+
+
+}
+
+
+# cleanse and label column names as ncessary
+label_data <- function(dataset) {
+     requirethat(!(is.na(data) | is.null(data)), 'Dataset cannot be absent or NULL')
 
 
 
 
+}
 
 # save tidydata result
 savetidydata <- function(data, filename='tidydata.csv') {
      requirethat(!(is.na(data) | is.null(data)), 'Dataset cannot be absent or NULL')
      requirethat(!is.na(filename), 'Filename is absent') 
      write.table(data, file=filename, sep="\t", row.names=FALSE)
+     TRUE
 }
 
 # Util functions
@@ -75,10 +90,9 @@ requirethat <- function(predicate, message) {
 }
 
 # Main
-
 fetch_data()
-master_data <- combine_data()
-master_data_labelled <- label_data(master_data)
-master_data_filtered <- filter_data(master_data)
-setwd("..")
-savetidydata(master_data)
+scriptresult <- combine_data() %>% 
+               filter_data %>%
+               label_data %>%
+               savetidydata(filename='../tidaydata.csv')
+
