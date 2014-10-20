@@ -36,9 +36,9 @@ activity_index <- mergedata('y')
 timeseries_data <- mergedata('X')
 
 # Check for number of rows match
-if(known_observations-nrow(subject_set) ==0) { stop('Number of observatons not equal to doc')}
-if((nrow(subject_set) - nrow(activity_index) == 0) { stop('subject index not equals activity index') }
-if((nrow(timeseries_data) - nrow(activity_index) == 0) { stop('activity index not equal time series data') }
+if(known_observations-nrow(subject_set) !=0) { stop('Number of observatons not equal to doc')}
+if(nrow(subject_set) - nrow(activity_index) != 0) { stop('subject index not equals activity index') }
+if(nrow(timeseries_data) - nrow(activity_index) != 0) { stop('activity index not equal time series data') }
 
 
 
