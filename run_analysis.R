@@ -65,7 +65,8 @@ cleanse_colname <- function(columns) {
 # filter data for mean and standard deviation per assignment
 filter_data <- function(dataset) {
      requirethat(!(is.na(data) | is.null(data)), 'Dataset cannot be absent or NULL')
-     
+     col <- colnames(dataset)
+     colsextracted <- 
 
 }
 
