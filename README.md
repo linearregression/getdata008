@@ -16,6 +16,12 @@ Go to the directory containing the run_analysis.R. The type.
 source('run_analysis.R')
 
 ```
+# Data codebook
+
+Data Codebook provides more information such as data labelling, of information etc tidydata.txt
+
+Data Codebook located below:
+[https://github.com/linearregression/getdata008/blob/master/codebook.md](https://github.com/linearregression/getdata008/blob/master/codebook.md)
 
 # Script flow :
 Each activity is associated with an integer number (1-6), from activity_labels.txt. y_train and y_test files contains the list of columns 
