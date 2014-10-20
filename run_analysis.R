@@ -68,14 +68,14 @@ cleanse_colname <- function(columns) {
                    x <- sub(pattern="*Gyro", "Gyroscope", x) 
                    x <- sub(pattern='*Mag', "Magnitude", x)
                    x <- sub(pattern='*std', "standarddeviation", x)
-                   x <- sub(pattern='^f', 'frequency', x)
-                  x <- sub(pattern='^t', 'time', x) 
+                   x <- sub(pattern='^f', 'frequency-', x)
+                   x <- sub(pattern='^t', 'time-', x) 
                })
      return(unlist(columns))
 }
 
 # filter data for mean and standard deviation per assignment
-# We only care about columns that have both mean AND stardard deviations
+# We only care about columns that have either mean or stardard deviations
 filter_data <- function(dataset) {
      requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
      colsextracted <- colnames(dataset)
@@ -84,17 +84,16 @@ filter_data <- function(dataset) {
      col_index <- union(cols_mean,cols_std)
      colsextracted <- colsextracted[col_index]
      col <- cleanse_colname(colsextracted)
-     #col <- match_columns(col)
-     #ifelse((nrow(cols_mean) - nrow(cols_std) !=0
      ret <- dataset[col_index]
-     rm(list=c('col','cols_mean','cols_std'))
+     colnames(ret) <- col
+     rm(list=c('col','cols_mean','cols_std', 'col_index', 'colsextracted'))
      return(ret)
 }
 
 
-# cleanse and label column names as ncessary
+# extract relevant columns and calculate average of each
 label_data <- function(dataset) {
-     requirethat(!(is.na(data) | is.null(data)), 'Dataset cannot be absent or NULL')
+     requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
 
 
 
