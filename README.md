@@ -11,8 +11,7 @@ run_analysis.R automates the following:
 
 ## Background
 Dataset is about wearable computing.  
-Companies like Fitbit, Nike, and Jawbone Up are developing the most advanced algorithms to attract new users. The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone.
-Dataset is provided by UCI
+Companies like Fitbit, Nike, and Jawbone Up are developing the most advanced algorithms to attract new users. The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone. The following dataset provided by UCI, is for experiment for predicting human activity using smartphone data.
 
 [Human Activity Recognition Using Smartphones](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)
 
