@@ -64,12 +64,12 @@ cleanse_colname <- function(columns) {
 
      columns <- lapply(columns, FUN=function(x) {
                    x <- gsub(pattern='*\\(\\)*', '', x) 
-                  # x <- sub(pattern='^f*', 'frequency', x)
-                  # x <- sub(pattern='^t*', 'time', x) 
                    x <- sub(pattern='*Acc', "Accelerometer", x) 
                    x <- sub(pattern="*Gyro", "Gyroscope", x) 
                    x <- sub(pattern='*Mag', "Magnitude", x)
                    x <- sub(pattern='*std', "standarddeviation", x)
+                   x <- sub(pattern='^f', 'frequency', x)
+                  x <- sub(pattern='^t', 'time', x) 
                })
      return(unlist(columns))
 }
