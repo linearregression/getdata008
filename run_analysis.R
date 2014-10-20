@@ -30,7 +30,7 @@ setwd("./UCI HAR Dataset")
 combine_data <- function() {
     known_observations = 10299
     known_features = 561
-    activityLabels <- read.table(file='activity_labels.txt', skipNul=TRUE, stringsAsFactors=FALSE)
+
     # merge test and train subject ids
     subject_set <- mergedata('subject')
     # merge test and train y (activity index)
@@ -76,7 +76,8 @@ cleanse_colname <- function(columns) {
 # map acitivityId to activity name
 transform_activityId <- function(dataset) {
      requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
-     lapply
+     activityLabels <- read.table(file='activity_labels.txt', skipNul=TRUE, stringsAsFactors=FALSE)
+ 
 
 }
 
