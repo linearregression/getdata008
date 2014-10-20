@@ -29,6 +29,7 @@ setwd("./UCI HAR Dataset")
 # to help identify what data relate to which subjects
 combine_data <- function() {
     known_observations = 10299
+    known_features = 561
     activityLabels <- read.table(file='activity_labels.txt', skipNul=TRUE, stringsAsFactors=FALSE)
     # merge test and train subject ids
     subject_set <- mergedata('subject')
@@ -36,6 +37,8 @@ combine_data <- function() {
     activity_index <- mergedata('y')
     # merge test and train X (time series measurement)
     timeseries_data <- mergedata('X')
+    col  <- read.csv(file='./features.txt', sep='', header=FALSE, stringsAsFactors=F, strip.white=TRUE)
+
     # Check for number of rows match
     if(known_observations-nrow(subject_set) !=0)
         { stop('Number of observatons not equal to doc')}
@@ -43,8 +46,10 @@ combine_data <- function() {
         { stop('subject index not equals activity index') }
     if(nrow(timeseries_data) - nrow(activity_index) != 0)
         { stop('activity index not equal time series data') }
+    if(known_features-nrow(col) !=0)
+        { stop('Number of feature columns not equal to doc')}
     master_dataset <- cbind(subject_set, activity_index, timeseries_data)
-    col  <- read.csv(file='./features.txt', sep='', header=FALSE, stringsAsFactors=F, strip.white=TRUE)
+
     colnames(master_dataset) <-as.character(col$V2)
     rm(list=c('subject_set', 'activity_index', 'timeseries_data','col'))
     master_dataset
@@ -100,7 +105,7 @@ requirethat <- function(predicate, message) {
 
 # Main
 fetch_data()
-scriptresult <- combine_data() %>% 
+scriptresult <- combine_data %>% 
                filter_data %>%
                label_data %>%
                savetidydata(filename='../tidaydata.csv')
