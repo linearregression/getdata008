@@ -44,9 +44,17 @@ combine_data <- function() {
     if(nrow(timeseries_data) - nrow(activity_index) != 0)
         { stop('activity index not equal time series data') }
     master_dataset <- cbind(subject_set, activity_index, timeseries_data)
-    colnames(master_dataset) <- read.csv(file='./features.txt', sep='', header=FALSE, stringsAsFactors=F)
-    rm(list=c('subject_set', 'activity_index', 'timeseries_data'))
+    col  <- read.csv(file='./features.txt', sep='', header=FALSE, stringsAsFactors=F, strip.white=TRUE)
+    colnames(master_dataset) <-as.character(col$V2)
+    rm(list=c('subject_set', 'activity_index', 'timeseries_data','col'))
     master_dataset
+}
+
+# clease column names.
+cleanse_colname <- function(columns) {
+     requirethat(!(is.na(columns)), 'Columns names cannot be absent')
+     columns <- g
+
 }
 
 # filter data for mean and standard deviation per assignment
