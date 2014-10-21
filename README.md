@@ -37,13 +37,18 @@ Data Codebook located below:
 Each activity is associated with an integer number (1-6), from activity_labels.txt. y_train and y_test files contains the list of columns 
 numbered index associated with actvity labels for data files X_train and X_test.
 
--Data from test and train files are loaded and combined (Subject,Labels)
+-Data from test and train files are combined, with subjectId and actitivtyId prepended as columns.
+ AcitivytId are expanded to acitivity descriptions
 
--The features labels are input from features.txt. The indices containing the mean() or the std() measures are stored in a vector (indices), and the the features corresponding tto those indices are stored in a vector(features).
+-The features labels are input from features.txt. The indices containing the mean() or the std() measures are extracted.
+ Columnes are cleaned by:
+  * removing ()
+  * Expanding Shorthands like Acc to Accelerometer etc
+  * column names starting with t anf f are marked as time and frequency
 
--The test and train features are concatenated and all columns are removed that do not have an index in the indices vector; only the columns with a mean() or std() remain.
+- Averages are calcualted on columns with measurements, group by subject and activity
 
--A new data set,tidydata, is created by aggregating the merged dataset based on the mean of all numeric columns by the subject and activity.
+- A new data set,tidydata.csv is created and saved
 
 -tidydata is output to a file named tidydata.txt
 
