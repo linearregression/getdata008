@@ -140,6 +140,6 @@ requirethat <- function(predicate, message) {
 fetch_data()
 master_data <- combine_data()
 master_data <- filter_data(master_data)
-master_data <- independent_data(master_data)
-savetidydata(master_data, filename='../tidaydata.csv')
+average_data <- independent_data(master_data)
+savetidydata(average_data, filename='../tidaydata.csv')
 
