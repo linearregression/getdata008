@@ -54,4 +54,6 @@ numbered index associated with actvity labels for data files X_train and X_test.
 
 # Output:
 Resultant files is a single file tidydata.txt 
-
+To View output:
+data<-read.table(file='tidaydata.txt', header=T)
+View(data)
