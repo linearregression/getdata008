@@ -58,8 +58,9 @@ combine_data <- function() {
 }
 
 # clease column names.
-cleanse_colname <- function(columns) {
-     requirethat(is.character(columns), 'Columns names cannot be absent')
+cleanse_colname <- function(dataset) {
+     requirethat(is.data.frame(dataset), 'Columns names cannot be absent')
+     columns <- colnames(dataset)
      # remove ()
      # expand leading t, f as time,frequency
      # expand various shorthands
@@ -80,7 +81,7 @@ transform_activityId <- function(dataset) {
      requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
      activityLabels <- read.table(file='activity_labels.txt', skipNul=TRUE, stringsAsFactors=FALSE)
      # update activityId with activity descriptions
-     dataset[2] <- lapply(dataset[2], function(x) activityLabels$V2[x] )
+     dataset <- lapply(dataset[2], function(x) activityLabels$V2[x] )
      return(dataset)
 }
 
@@ -91,14 +92,14 @@ filter_data <- function(dataset) {
      colsextracted <- colnames(dataset)
      cols_mean <- grep(pattern="*-mean\\(\\)*", colsextracted, ignore.case=T)
      cols_std <- grep(pattern="*-std\\(\\)*", colsextracted, ignore.case=T)
-     col_index <- union(cols_mean,cols_std)
-     colsextracted <- colsextracted[col_index]
+     col_index <- union(c(1,2,cols_mean),cols_std)
+     colsextracted <- dataset[col_index]
      col <- cleanse_colname(colsextracted)
-     # column1,2 are subjectId and activityId
-     ret <- dataset[c(1,2,col_index)]
-     colnames(ret) <- col
-     rm(list=c('col','cols_mean','cols_std', 'col_index', 'colsextracted'))
-     return(ret)
+     # colsextracted <- transform_activityId(colsextracted)
+     # assign new labelled columns
+     colnames(colsextracted) <- col
+     rm(list=c('col','cols_mean','cols_std', 'col_index'))
+     return(colsextracted)
 }
 
 
