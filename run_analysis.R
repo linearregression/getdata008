@@ -60,7 +60,7 @@ combine_data <- function() {
 
 # clease column names.
 cleanse_colname <- function(dataset) {
-     requirethat(is.data.frame(dataset), 'Columns names cannot be absent')
+     requirethat(!is.data.frame(dataset), 'Columns names cannot be absent')
      columns <- colnames(dataset)
      # remove ()
      # expand leading t, f as time,frequency
@@ -89,14 +89,15 @@ transform_activityId <- function(dataset) {
 # filter data for mean and standard deviation per assignment
 # We only care about columns that have either mean or stardard deviations
 filter_data <- function(dataset) {
-     requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
+     requirethat(!is.data.frame(dataset), 'Dataset cannot be absent or NULL')
+     print('ok filterdata check')
      colsextracted <- colnames(dataset)
      cols_mean <- grep(pattern="*-mean\\(\\)*", colsextracted, ignore.case=T)
      cols_std <- grep(pattern="*-std\\(\\)*", colsextracted, ignore.case=T)
      col_index <- union(c(1,2,cols_mean),cols_std)
      colsextracted <- dataset[col_index]
      col <- cleanse_colname(colsextracted)
-     # colsextracted <- transform_activityId(colsextracted)
+     print('ok filterdata cleanse colname')
      # assign new labelled columns
      colnames(colsextracted) <- col
      rm(list=c('col','cols_mean','cols_std', 'col_index'))
@@ -108,14 +109,14 @@ filter_data <- function(dataset) {
 # group by subjectId and activity
 independent_data <- function(dataset) {
      library(plyr)
-     requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
+     requirethat(!is.data.frame(dataset), 'Dataset cannot be absent or NULL')
      n = length(colnames(dataset))
      ddply(dataset, .(subjectId, activityId), .fun=function(x){ colMeans(x[, 3:n], na.rm = TRUE)}) 
 }
 
 # save tidydata result
 savetidydata <- function(data, filename='tidydata.csv') {
-     requirethat(is.data.frame(data), 'Dataset cannot be absent or NULL')
+     requirethat(!is.data.frame(data), 'Dataset cannot be absent or NULL')
      requirethat(!is.na(filename), 'Filename is absent') 
      write.table(data, file=filename, sep="\t", row.names=FALSE)
      TRUE
