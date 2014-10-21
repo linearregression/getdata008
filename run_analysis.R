@@ -138,8 +138,13 @@ requirethat <- function(predicate, message) {
 
 # Main
 fetch_data()
+print('Done fetch data')
 master_data <- combine_data()
+print('Done reading and combing data')
 master_data <- filter_data(master_data)
+print('Done filter data')
 average_data <- independent_data(master_data)
+print('Done calculating averages')
 savetidydata(average_data, filename='../tidaydata.csv')
+print('Done writing tidydata')
 
