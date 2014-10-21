@@ -79,8 +79,8 @@ cleanse_colname <- function(columns) {
 transform_activityId <- function(dataset) {
      requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
      activityLabels <- read.table(file='activity_labels.txt', skipNul=TRUE, stringsAsFactors=FALSE)
-     
-
+     dataset[2] <- lapply(dataset[2], function(x) activityLabels$V2[x] )
+     return(dataset)
 }
 
 # filter data for mean and standard deviation per assignment
