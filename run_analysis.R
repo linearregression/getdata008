@@ -91,11 +91,11 @@ filter_data <- function(dataset) {
      colsextracted <- colnames(dataset)
      cols_mean <- grep(pattern="*-mean\\(\\)*", colsextracted, ignore.case=T)
      cols_std <- grep(pattern="*-std\\(\\)*", colsextracted, ignore.case=T)
-     # column1,2 are subjectId and activityId
-     col_index <- union(c(1,2,cols_mean),cols_std)
+     col_index <- union(cols_mean,cols_std)
      colsextracted <- colsextracted[col_index]
      col <- cleanse_colname(colsextracted)
-     ret <- dataset[col_index]
+     # column1,2 are subjectId and activityId
+     ret <- dataset[c(1,2,col_index)]
      colnames(ret) <- col
      rm(list=c('col','cols_mean','cols_std', 'col_index', 'colsextracted'))
      return(ret)
@@ -105,11 +105,11 @@ filter_data <- function(dataset) {
 # extract relevant columns and calculate average of each
 # group by subjectId and activity
 independent_data <- function(dataset) {
-     library(rplyr)
-     library(dplyr)
+     library(plyr)
+  
      requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
      n = length(colnames(dataset))
-     ddplyr(dataset, .(subject, activityId), .fun=function(x){ colMeans(x[, 2:n], na.rm = TRUE)}) )
+     ddply(dataset, .(subjectId, activityId), .fun=function(x){ colMeans(x[, 2:n], na.rm = TRUE)}) 
 }
 
 # save tidydata result
@@ -138,8 +138,8 @@ requirethat <- function(predicate, message) {
 
 # Main
 fetch_data()
-scriptresult <- combine_data %>% 
-               filter_data %>%
-               independent_data %>%
-               savetidydata(filename='../tidaydata.csv')
+master_data <- combine_data()
+master_data <- filter_data(master_data)
+master_data <- independent_data(master_data)
+savetidydata(master_data, filename='../tidaydata.csv')
 
