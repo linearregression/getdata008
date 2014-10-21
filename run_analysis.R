@@ -60,9 +60,7 @@ combine_data <- function() {
 
 # clease column names.
 cleanse_colname <- function(dataset) {
-     print('clenasecolumne')
-     print(is.data.frame(dataset))
-     print(class(dataset))
+
      requirethat(is.data.frame(dataset), 'Columns names cannot be absent')
      columns <- colnames(dataset)
      # remove ()
@@ -119,7 +117,7 @@ independent_data <- function(dataset) {
 savetidydata <- function(data, filename='tidydata.csv') {
      requirethat(is.data.frame(data), 'Dataset cannot be absent or NULL')
      requirethat(!is.na(filename), 'Filename is absent') 
-     write.table(data, file=filename, sep="\t", row.names=FALSE)
+     write.table(data, file=filename,  row.names=FALSE)
      TRUE
 }
 
@@ -148,7 +146,7 @@ master_data <- filter_data(master_data)
 print('Done filter data')
 average_data <- independent_data(master_data)
 print('Done calculating averages')
-savetidydata(average_data, filename='../tidaydata.csv')
+savetidydata(average_data, filename='../tidaydata.txt')
 print('Done writing tidydata')
 setwd("..")
 rm(list=ls())
