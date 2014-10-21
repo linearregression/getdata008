@@ -1,14 +1,21 @@
-* subjectId
-* activityId 
+CodeBook variable descriptions:
+
+* subjectId: integer id to identify subjects [1-30]
+* activityId: descriptions of activity [Walking, etc] refer to data activity_label.txt
+* 
+Measurements are along 3 axis X,Y,Z as denoted as below:
 * time-BodyAccelerometer-mean-X 
 * time-BodyAccelerometer-mean-Y 
 * time-BodyAccelerometer-mean-Z 
+* 
 * time-GravityAccelerometer-mean-X 
 * time-GravityAccelerometer-mean-Y 
 * time-GravityAccelerometer-mean-Z 
+* 
 * time-BodyAccelerometerJerk-mean-X 
 * time-BodyAccelerometerJerk-mean-Y 
 * time-BodyAccelerometerJerk-mean-Z 
+* 
 * time-BodyGyroscope-mean-X 
 * time-BodyGyroscope-mean-Y 
 * time-BodyGyroscope-mean-Z 
