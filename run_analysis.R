@@ -79,6 +79,7 @@ cleanse_colname <- function(columns) {
 transform_activityId <- function(dataset) {
      requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
      activityLabels <- read.table(file='activity_labels.txt', skipNul=TRUE, stringsAsFactors=FALSE)
+     # update activityId with activity descriptions
      dataset[2] <- lapply(dataset[2], function(x) activityLabels$V2[x] )
      return(dataset)
 }
@@ -102,12 +103,13 @@ filter_data <- function(dataset) {
 
 
 # extract relevant columns and calculate average of each
-label_data <- function(dataset) {
+# group by subjectId and activity
+independent_data <- function(dataset) {
+     library(rplyr)
+     library(dplyr)
      requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
-
-
-
-
+     n = length(colnames(dataset))
+     ddplyr(dataset, .(subject, activityId), .fun=function(x){ colMeans(x[, 2:n], na.rm = TRUE)}) )
 }
 
 # save tidydata result
@@ -138,6 +140,6 @@ requirethat <- function(predicate, message) {
 fetch_data()
 scriptresult <- combine_data %>% 
                filter_data %>%
-               label_data %>%
+               independent_data %>%
                savetidydata(filename='../tidaydata.csv')
 
