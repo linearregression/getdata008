@@ -3,7 +3,7 @@
 # Extracts only the measurements on the mean and standard deviation for each measurement. 
 # Uses descriptive activity names to name the activities in the data set
 # Appropriately labels the data set with descriptive variable names. #Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-
+rm(list=ls())
 # Set of global variables
 result <- 'tidydata.txt'
 
@@ -23,6 +23,7 @@ fetch_data <- function() {
 
 # The goal is to create a single table of all data on each subject. One observation is on a subject per timestamp.
 # From READMEwe know we have 10299 number of observations
+
 setwd("./UCI HAR Dataset")
 
 # Merge test/train data into one dataset. SubjectId and Activity prepend as columns
@@ -147,4 +148,7 @@ average_data <- independent_data(master_data)
 print('Done calculating averages')
 savetidydata(average_data, filename='../tidaydata.csv')
 print('Done writing tidydata')
+setwd("..")
+rm(list=ls())
+
 
