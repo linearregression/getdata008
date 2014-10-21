@@ -107,10 +107,9 @@ filter_data <- function(dataset) {
 # group by subjectId and activity
 independent_data <- function(dataset) {
      library(plyr)
-  
      requirethat(is.data.frame(dataset), 'Dataset cannot be absent or NULL')
      n = length(colnames(dataset))
-     ddply(dataset, .(subjectId, activityId), .fun=function(x){ colMeans(x[, 2:n], na.rm = TRUE)}) 
+     ddply(dataset, .(subjectId, activityId), .fun=function(x){ colMeans(x[, 3:n], na.rm = TRUE)}) 
 }
 
 # save tidydata result
